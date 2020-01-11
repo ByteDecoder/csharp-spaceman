@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace Spaceman {
   public class Game {
@@ -34,6 +35,26 @@ namespace Spaceman {
       Console.WriteLine(Ufo.Stringify());
       Console.WriteLine($"Current word: {CurrentWord}");
       Console.WriteLine($"Number guesses remaining: {MaxGuesses - WrongGuesses}");
+    }
+
+    public void Ask() {
+      Console.Write("Enter your guess letter: ");
+      var input = Console.ReadLine()?.ToLower();
+      if(input == null) return;
+
+      if(input.Length > 1) {
+        Console.WriteLine("Only one letter at a time is valid.");
+        return;
+      }
+
+      var contains = Codewords.Contains(input);
+      var letter = input.ToCharArray()[0];
+      if(contains) {
+        CurrentWord = CurrentWord.Replace('_', letter);
+      } else {
+        Ufo.AddPart();
+        WrongGuesses++;
+      }
     }
 
     public bool DidWin() {
