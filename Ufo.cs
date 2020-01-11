@@ -1,9 +1,7 @@
 using System;
 
-namespace Spaceman
-{
-  class Ufo
-  {
+namespace Spaceman {
+  public class Ufo {
     private string s0 = "" +
     "                 .                            \n" +
     "                 |                            \n" +
@@ -93,26 +91,22 @@ namespace Spaceman
     "           /           \\                     \n" +
     "          /             \\                    \n" +
     "         /               \\                   \n";
-    private string[] ufos;
-    private int stage;
+    private readonly string[] ufos;
+    private int _stage;
 
-    public Ufo()
-    {
-      ufos = new string[] {s0, s1, s2, s3, s4, s5};
+    public Ufo() {
+      ufos = new string[] { s0, s1, s2, s3, s4, s5 };
     }
 
-    public void AddPart()
-    {
-      stage++;
-      if (stage >= ufos.Length)
-      {
-        stage = ufos.Length;
+    public void AddPart() {
+      _stage++;
+      if(_stage >= ufos.Length) {
+        _stage = ufos.Length;
       }
     }
 
-    public string Stringify()
-    {
-      return ufos[stage];
+    public string Stringify() {
+      return ufos[_stage];
     }
   }
 }
