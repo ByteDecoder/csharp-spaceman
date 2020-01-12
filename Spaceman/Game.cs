@@ -17,7 +17,7 @@ namespace Spaceman {
     public Ufo Ufo => new Ufo();
 
     public Game() {
-      var randomCodeword = new Random(Codewords.Length).Next();
+      var randomCodeword = new Random().Next(Codewords.Length);
       Codeword = Codewords[randomCodeword];
       MaxGuesses = 5;
       WrongGuesses = 0;

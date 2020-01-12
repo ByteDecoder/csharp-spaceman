@@ -9,3 +9,9 @@
 ```bash
 $ dotnet run
 ```
+
+## Running Tests
+
+```bash
+$ dotnet test
+```
