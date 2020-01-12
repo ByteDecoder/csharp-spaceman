@@ -7,7 +7,7 @@
 ## Running the game
 
 ```bash
-$ dotnet run
+$ dotnet run --project ./Spaceman
 ```
 
 ## Running Tests
