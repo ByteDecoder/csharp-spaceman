@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 
 namespace Spaceman {
   public class Game {
+    private readonly List<char> _guessedLetters = new List<char>();
     public string Codeword { get; }
 
     public string CurrentWord { get; set; }
@@ -13,7 +15,7 @@ namespace Spaceman {
       "mediocrity", "basque", "nautical", "cracked", "intern"
     };
 
-    public Ufo Ufo => new Ufo();
+    public Ufo Ufo { get; }
 
     public Game() {
       var randomCodeword = new Random().Next(Codewords.Length);
@@ -21,6 +23,7 @@ namespace Spaceman {
       MaxGuesses = 5;
       WrongGuesses = 0;
       CurrentWord = new string('_', Codeword.Length);
+      Ufo = new Ufo();
     }
 
     public void Greet() {
@@ -37,6 +40,12 @@ namespace Spaceman {
     }
 
     public void Ask() {
+      if(_guessedLetters.Count > 0) {
+        Console.WriteLine($"Already typed letters in thi game session: ");
+        _guessedLetters.ForEach(item => Console.Write($" {item} "));
+        Console.WriteLine("");
+      }
+
       Console.Write("Enter your guess letter: ");
       var input = Console.ReadLine()?.ToLower();
       if(input == null) return;
@@ -46,25 +55,27 @@ namespace Spaceman {
         return;
       }
 
-      if(CurrentWord.Contains(input)) {
+      var contains = Codeword.Contains(input);
+      var letter = input.ToCharArray()[0];
+
+      if(_guessedLetters.Contains(letter)) {
         Console.WriteLine($"You already typed the ({input}) letter, try another one...");
         return;
       }
 
-      var contains = Codeword.Contains(input);
       if(contains) {
-        var letter = input.ToCharArray()[0];
-        var pivotWord = Codeword;
+        var currentIndex = 0;
         while(true) {
-          var index = pivotWord.IndexOf(letter);
+          var index = Codeword.IndexOf(letter, currentIndex);
           if(index == -1) break;
-          pivotWord = pivotWord.Remove(index, 1);
+          currentIndex = index + 1;
           CurrentWord = CurrentWord.Remove(index, 1).Insert(index, letter.ToString());
         }
       } else {
         Ufo.AddPart();
         WrongGuesses++;
       }
+      _guessedLetters.Add(letter);
     }
 
     public bool DidWin() {
