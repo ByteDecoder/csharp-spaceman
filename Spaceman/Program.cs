@@ -6,10 +6,11 @@ namespace Spaceman {
       var game = new Game();
 
       game.Greet();
-      do {
+      while(true) {
         game.Display();
         game.Ask();
-      } while(game.DidWin() || game.DidLose());
+        if(game.DidWin() || game.DidLose()) break;
+      }
 
       Console.WriteLine(game.DidWin() ? "You win" : "You Lose");
     }

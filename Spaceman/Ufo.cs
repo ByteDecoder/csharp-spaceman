@@ -91,22 +91,22 @@ namespace Spaceman {
     "           /           \\                     \n" +
     "          /             \\                    \n" +
     "         /               \\                   \n";
-    private readonly string[] ufos;
-    private int _stage;
+    private readonly string[] _ufos;
+    private int _stage = 0;
 
     public Ufo() {
-      ufos = new string[] { s0, s1, s2, s3, s4, s5 };
+      _ufos = new string[] { s0, s1, s2, s3, s4, s5 };
     }
 
     public void AddPart() {
       _stage++;
-      if(_stage >= ufos.Length) {
-        _stage = ufos.Length;
+      if(_stage >= _ufos.Length) {
+        _stage = _ufos.Length;
       }
     }
 
     public string Stringify() {
-      return ufos[_stage];
+      return _ufos[_stage];
     }
   }
 }

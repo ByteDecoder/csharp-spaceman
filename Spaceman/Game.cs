@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 
 namespace Spaceman {
   public class Game {
@@ -47,10 +46,21 @@ namespace Spaceman {
         return;
       }
 
-      var contains = Codewords.Contains(input);
-      var letter = input.ToCharArray()[0];
+      if(CurrentWord.Contains(input)) {
+        Console.WriteLine($"You already typed the ({input}) letter, try another one...");
+        return;
+      }
+
+      var contains = Codeword.Contains(input);
       if(contains) {
-        CurrentWord = CurrentWord.Replace('_', letter);
+        var letter = input.ToCharArray()[0];
+        var pivotWord = Codeword;
+        while(true) {
+          var index = pivotWord.IndexOf(letter);
+          if(index == -1) break;
+          pivotWord = pivotWord.Remove(index, 1);
+          CurrentWord = CurrentWord.Remove(index, 1).Insert(index, letter.ToString());
+        }
       } else {
         Ufo.AddPart();
         WrongGuesses++;
